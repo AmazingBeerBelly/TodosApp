@@ -2,14 +2,28 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  FlatList,
 } from 'react-native';
 
-export default class TodoList extends Component {
+import { connect } from 'react-redux';
+
+class TodoList extends Component {
   render() {
+    console.log('props todos: ', this.props.todos);
     return (
-      <View style={{ flex: 1 }}>
-        <Text>TodoList</Text>
-      </View>
+      <FlatList
+        data={this.props.todos}
+        renderItem={({item}) => <Text>{item.text}</Text>}
+      />
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  console.log('todos: ', state.todos);
+  return {
+    todos: state.todos.todos,
+  }
+}
+
+export default connect(mapStateToProps, null)(TodoList);
